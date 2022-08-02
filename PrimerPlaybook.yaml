@@ -41,6 +41,9 @@
   - name: Move to mail
     copy: remote_src=True src=$HOME/squirrelmail-webmail-1.4.22 dest=/var/www/html/mail
 
+  - name: Move configuration file
+    copy: remote_src=True src=/var/www/html/mail/config/config_default.php  dest=/var/www/html/mail/config/config.php
+
   - name: Squirrelmail permissions
     file:
       path: /var/www/html/mail
