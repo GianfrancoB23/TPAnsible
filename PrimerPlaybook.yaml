@@ -36,7 +36,10 @@
   - name: Unzip squirrelmail
     unarchive:
       src: $HOME/squirrelmail-webmail-1.4.22.tar.gz
-      dest: /var/www/html/mail
+      dest: $HOME
+  
+  - name: Move to mail
+    copy: remote_src=True src=$HOME/squirrelmail-webmail-1.4.22 dest=/var/www/html/mail
 
   - name: Squirrelmail permissions
     file:
@@ -46,3 +49,4 @@
       owner: www-data
       group: www-data
       mode: '0755'
+
