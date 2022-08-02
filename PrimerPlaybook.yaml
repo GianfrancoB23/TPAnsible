@@ -4,6 +4,10 @@
   become: yes
   
   tasks: 
+  - name: Update
+    apt:
+      update_cache: yes
+
   - name: Install postfix
     apt: 
       name: postfix
@@ -15,5 +19,11 @@
       state: latest
 
   - name: Install dovecot
-    ansible.builtin.shell: 
-      cmd: apt install dovecot
+    apt: 
+      name: dovecot-core
+      state: latest
+
+  - name: Install squirrelmail
+    apt:
+      name: squirrelmail
+      state: latest
