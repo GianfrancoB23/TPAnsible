@@ -1,1 +1,19 @@
 ---
+- name: Install services for mailling
+  hosts: mailservers
+  become: yes
+  
+  tasks: 
+  - name: Install postfix
+    apt: 
+      name: postfix
+      state: present
+
+  - name: Install apache2
+    apt: 
+      name: apache2
+      state: latest
+
+  - name: Install dovecot
+    ansible.builtin.shell: 
+      cmd: apt install dovecot
