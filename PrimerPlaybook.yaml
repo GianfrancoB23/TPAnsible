@@ -23,7 +23,26 @@
       name: dovecot-core
       state: latest
 
-  - name: Install squirrelmail
-    apt:
-      name: squirrelmail
+  - name: Install zip
+    apt: 
+      name: zip
       state: latest
+
+  - name: Download squirrelmail
+    get_url:
+      url: https://www.squirrelmail.org/countdl.php?fileurl=http%3A%2F%2Fprdownloads.sourceforge.net%2Fsquirrelmail%2Fsquirrelmail-webmail-1.4.22.tar.gz
+      dest: $HOME/
+
+  - name: Unzip squirrelmail
+    unarchive:
+      src: $HOME/squirrelmail-webmail-1.4.22.tar.gz
+      dest: /var/www/html/mail
+
+  - name: Squirrelmail permissions
+    file:
+      path: /var/www/html/mail
+      state: directory
+      recurse: yes
+      owner: www-data
+      group: www-data
+      mode: '0755'
