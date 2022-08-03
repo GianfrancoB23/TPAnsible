@@ -10,17 +10,17 @@
     - name: test change
       lineinfile:
         path: /root/prueba1.txt
-        search_string: '^$domain ='
+        regexp: '^\$domain ='
         line: $domain = 'pruebataller.ort';
 
     - name: test change
       lineinfile:
         path: /root/prueba1.txt
-        regexp: '^data_dir'
+        regexp: '^\$data_dir'
         line: $data_dir = '/var/www/html/mail/data/';
 
     - name: test change
       lineinfile:
         path: /root/prueba1.txt
-        regexp: '^$attachment_dir'
+        regexp: '^\$attachment_dir'
         line: $attachment_dir = '/var/www/html/mail/attach/';
