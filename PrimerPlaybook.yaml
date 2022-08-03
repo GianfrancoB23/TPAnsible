@@ -46,23 +46,9 @@
 
   - name: Squirrelmail permissions
     file:
-      path: /var/www/html/mail
-      state: directory
-      recurse: yes
-      owner: www-data
-      group: www-data
-      mode: '0755'
-
-  - name: Changes values
-    tasks:
-    - name: Move configuration file
-      copy: remote_src=True src=/home/administrator/prueba.txt dest=/root/prueba1.txt
-
-    - name: test change
-      lineinfile:
-        path: /root/prueba1.txt
-        search_string: '^$domain ='
-        line: $domain = 'pruebataller.ort';
+      path: /var/www/html/mail/config/config.php
+      regexp: '^\$domain ='
+      line: $domain = 'pruebataller.ort';
 
     - name: test change
       lineinfile:
