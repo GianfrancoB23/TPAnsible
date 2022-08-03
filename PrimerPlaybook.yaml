@@ -31,33 +31,42 @@
   - name: Download squirrelmail
     get_url:
       url: https://www.squirrelmail.org/countdl.php?fileurl=http%3A%2F%2Fprdownloads.sourceforge.net%2Fsquirrelmail%2Fsquirrelmail-webmail-1.4.22.tar.gz
-      dest: $HOME/
+      dest: /home/ansible/
 
   - name: Unzip squirrelmail
     unarchive:
-      src: $HOME/squirrelmail-webmail-1.4.22.tar.gz
-      dest: $HOME
+      src: /home/ansible/squirrelmail-webmail-1.4.22.tar.gz
+      dest: /home/ansible/
   
   - name: Move to mail
-    copy: remote_src=True src=$HOME/squirrelmail-webmail-1.4.22 dest=/var/www/html/mail
+    copy: remote_src=True src=/home/ansible/squirrelmail-webmail-1.4.22 dest=/var/www/html/mail
 
   - name: Move configuration file
     copy: remote_src=True src=./config_default.php  dest=/var/www/html/mail/config/config.php
 
-  - name: Squirrelmail permissions
-    file:
+  - name: Change $domain
+    lineinfile:
       path: /var/www/html/mail/config/config.php
       regexp: '^\$domain ='
       line: $domain = 'pruebataller.ort';
 
-    - name: test change
-      lineinfile:
-        path: /root/prueba1.txt
-        regexp: '^data_dir'
-        line: $data_dir = '/var/www/html/mail/data/';
+  - name: Change $data_dir
+    lineinfile:
+      path: /var/www/html/mail/config/config.php
+      regexp: '^\$data_dir'
+      line: $data_dir = '/var/www/html/mail/data/';
 
-    - name: test change
-      lineinfile:
-        path: /root/prueba1.txt
-        regexp: '^$attachment_dir'
-        line: $attachment_dir = '/var/www/html/mail/attach/';
+  - name: Change $attachment
+    lineinfile:
+      path: /var/www/html/mail/config/config.php
+      regexp: '^\$attachment_dir'
+      line: $attachment_dir = '/var/www/html/mail/attach/';
+
+  - name: Squirrelmail permissions
+    file:
+      path: /var/www/html/mail
+      state: directory
+      recurse: yes
+      owner: www-data
+      group: www-data
+      mode: '0755'
