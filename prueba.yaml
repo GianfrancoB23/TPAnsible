@@ -5,9 +5,22 @@
     
     tasks:
     - name: Move configuration file
-      copy: remote_src=True src=/var/www/html/mail/config/config_default.php  dest=/home/ansible/config.php
+      copy: remote_src=True src=/home/administrator/prueba.txt dest=/root/prueba1.txt
 
-    - name: Changes values
-      lineinfile: 
-        path: /home/ansible/config.php
-        line: $domain = ''; $data_dir = '/var/www/html/mail/data/'; $attachment_dir = '/var/www/html/mail/attach/';
+    - name: test change
+      lineinfile:
+        path: /root/prueba1.txt
+        search_string: '^$domain ='
+        line: $domain = 'pruebataller.ort';
+
+    - name: test change
+      lineinfile:
+        path: /root/prueba1.txt
+        regexp: '^data_dir'
+        line: $data_dir = '/var/www/html/mail/data/';
+
+    - name: test change
+      lineinfile:
+        path: /root/prueba1.txt
+        regexp: '^$attachment_dir'
+        line: $attachment_dir = '/var/www/html/mail/attach/';
